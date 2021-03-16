@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:message_app/pages/home/message_page.dart';
 import 'package:message_app/pages/loginRegisraion/registration_page.dart';
 import 'package:message_app/pages/widgets/custom_widgets.dart';
 import 'package:page_transition/page_transition.dart';
@@ -26,7 +27,15 @@ class LoginPage extends StatelessWidget {
               ),
               inputFields(text: "Email", controller: _emailController),
               inputFields(text: "Password", controller: _passwordController),
-              mainButton(text: "Login", onTap: () {}),
+              mainButton(
+                  text: "Login",
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        PageTransition(
+                            child: MessagePage(),
+                            type: PageTransitionType.fade));
+                  }),
               linkText(
                   text: "New User? Register",
                   onTap: () {

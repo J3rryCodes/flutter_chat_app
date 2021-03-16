@@ -59,6 +59,7 @@ Widget mainButton({@required String text, @required Function onTap}) {
               fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
         ),
       ),
+      onTap: () => onTap(),
     ),
   );
 }
@@ -76,6 +77,29 @@ linkText({String text, Function onTap}) {
           onTap: () {
             onTap();
           }),
+    ),
+  );
+}
+
+Widget customMessageView({@required String message, @required isOrgin}) {
+  return Container(
+    margin: EdgeInsets.all(12),
+    child: Row(
+      mainAxisAlignment:
+          isOrgin ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.all(8),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(18),
+              color: isOrgin ? Colors.black : Colors.grey[600]),
+          child: Text(
+            message,
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+        ),
+      ],
     ),
   );
 }
