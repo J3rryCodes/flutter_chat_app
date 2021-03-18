@@ -21,10 +21,16 @@ class FirebaseauthenticationCreatingSuccesfull
 class FirebaseauthenticationLoging extends FirebaseauthenticationState {}
 
 class FirebaseauthenticationLogingSuccesfull
-    extends FirebaseauthenticationState {}
+    extends FirebaseauthenticationState {
+  final User user;
+
+  FirebaseauthenticationLogingSuccesfull(this.user);
+}
 
 class FirebaseauthenticationErrorState extends FirebaseauthenticationState {
   final dynamic message;
 
   FirebaseauthenticationErrorState(this.message);
 }
+
+class FirebaseauthenticationLogoutState extends FirebaseauthenticationState {}

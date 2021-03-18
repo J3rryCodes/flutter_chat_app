@@ -13,6 +13,9 @@ class FirebaseauthenticationBloc
     extends Bloc<FirebaseauthenticationEvent, FirebaseauthenticationState> {
   FirebaseauthenticationBloc() : super(FirebaseauthenticationInitial());
   FirebaseConnection instance = FirebaseConnection.instance;
+
+  User user;
+
   @override
   Stream<FirebaseauthenticationState> mapEventToState(
     FirebaseauthenticationEvent event,
@@ -20,13 +23,32 @@ class FirebaseauthenticationBloc
     if (event is FirebaseauthenticationCreateEvent) {
       yield FirebaseauthenticationCreating();
       try {
-        User user = await instance.createUser(
+        user = await instance.createUser(
             email: event.email, password: event.password);
+
         yield FirebaseauthenticationCreatingSuccesfull(user);
       } catch (e) {
         debugPrint(e.toString());
         yield FirebaseauthenticationErrorState(e);
       }
+    } else if (event is FirebaseauthenticationLoginEvent) {
+      yield FirebaseauthenticationLoging();
+      try {
+        user = await instance.loginUser(
+            email: event.email, password: event.password);
+        debugPrint("email : ${user.email}");
+        yield FirebaseauthenticationLogingSuccesfull(user);
+      } catch (e) {
+        yield FirebaseauthenticationErrorState(e);
+      }
+    } else if (event is FirebaseauthenticationLogoutEvent) {
+      try {
+        instance.logoutUser();
+      } catch (e) {
+        //TODO
+        throw e;
+      }
+      yield FirebaseauthenticationLogoutState();
     }
   }
 }

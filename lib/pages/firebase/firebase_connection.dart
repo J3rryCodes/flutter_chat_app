@@ -18,4 +18,18 @@ class FirebaseConnection {
       throw Exception(e);
     }
   }
+
+  Future<User> loginUser({String email, String password}) async {
+    try {
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      return userCredential.user;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future logoutUser() async {
+    await _auth.signOut();
+  }
 }

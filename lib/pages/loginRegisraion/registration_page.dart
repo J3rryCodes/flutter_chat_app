@@ -19,14 +19,11 @@ class RegistrationPage extends StatelessWidget {
       body:
           BlocListener<FirebaseauthenticationBloc, FirebaseauthenticationState>(
         listener: (context, state) {
-          if (state is FirebaseauthenticationCreatingSuccesfull)
-            Navigator.pushReplacement(
-                context,
-                PageTransition(
-                    child: MessagePage(), type: PageTransitionType.fade));
-          else if (state is FirebaseauthenticationErrorState)
+          if (state is FirebaseauthenticationErrorState)
             showScaffoldMessage(
                 context, state.message.toString(), Colors.black);
+          else if (state is FirebaseauthenticationErrorState)
+            return ErrorPage();
         },
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -53,8 +50,6 @@ class RegistrationPage extends StatelessWidget {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
-                    else if (state is FirebaseauthenticationErrorState)
-                      return ErrorPage();
                     else
                       return mainButton(
                           text: "Register",
@@ -85,6 +80,9 @@ class RegistrationPage extends StatelessWidget {
             r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
         .hasMatch(_emailController.text))
       showScaffoldMessage(context, "Invalid email address", Colors.black);
+    else if (_passwordController.text == null ||
+        _passwordController.text.length < 6)
+      showScaffoldMessage(context, "Too small password", Colors.black);
     else if (_passwordController.text != _conPasswordController.text)
       showScaffoldMessage(context, "Password mismatch", Colors.black);
     else

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:message_app/pages/bloc/firebaseauthentication_bloc.dart';
+import 'package:message_app/pages/controller/auth_controller.dart';
 import 'package:message_app/pages/loginRegisraion/login_page.dart';
 
 import 'pages/error_page.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           accentColor: Colors.black,
           primarySwatch: primaryBlack,
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
           builder: (context, snapshot) {
             debugPrint("===> ${snapshot.connectionState.toString()}");
             if (snapshot.connectionState == ConnectionState.done)
-              return LoginPage();
+              return AuthController();
             else
               return ErrorPage();
           },

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:message_app/pages/bloc/firebaseauthentication_bloc.dart';
 import 'package:message_app/pages/widgets/custom_widgets.dart';
 
 class MessagePage extends StatelessWidget {
@@ -6,8 +9,19 @@ class MessagePage extends StatelessWidget {
   final List<bool> _flag = [true, false, true, false];
   @override
   Widget build(BuildContext context) {
+    _secureWindowScreenshort();
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.person_outline_rounded,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            BlocProvider.of<FirebaseauthenticationBloc>(context, listen: false)
+                .add(FirebaseauthenticationLogoutEvent());
+          },
+        ),
         elevation: 0,
         title: Text("Messages"),
       ),
@@ -104,5 +118,9 @@ class MessagePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void _secureWindowScreenshort() async {
+    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
 }
